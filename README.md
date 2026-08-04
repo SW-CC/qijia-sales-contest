@@ -55,4 +55,4 @@ python -m http.server 8080
 - **後端（`/api/contest`、LINE 登入、session）不在本 repo**，契約見 `docs/api-contest.md`；要動後端請在 PR 描述提需求，由維護者（小白）在主專案處理。
 - **部署權只在主專案**：本 repo merge 後由維護者同步進 qijia-tools 並部署正式站，協作者不需要任何金鑰。
 - 流程：開 branch → PR（說明改了什麼、為什麼、驗過什麼）→ 維護者 review／merge → 同步部署。**請勿直接 push main。**
-- 頁面含公司內部人員姓名，repo 維持 **private**，勿公開、勿轉載。
+- 本 repo 為**公開**（方便協作者與其 AI 工具直接讀取）。因此鐵律：**任何金鑰、token、密碼、客戶資料、內部連結一律不得進入本 repo**——後端與部署憑證本來就不在這裡，維持這個狀態。頁面中的業務姓名為公司對外刊登既有資訊。
