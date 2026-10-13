@@ -26,6 +26,35 @@ button{cursor:pointer;background:none;border:none}
 :focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
 svg.ic{width:1em;height:1em;vertical-align:-.14em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
 
+#sales-race{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px}
+.race-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+.race-head h2{font-size:16px;font-weight:800;color:var(--navy);margin:0}
+.race-sub{font-size:12px;color:var(--sub);margin-top:2px}
+.race-week{font-size:13px;font-weight:800;color:var(--navy);white-space:nowrap}
+.race-controls{display:flex;justify-content:flex-end;margin-bottom:8px}
+.race-layout{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:14px;align-items:stretch}
+.race-chart{position:relative;min-width:0;height:440px;border:1px solid var(--card-line);border-radius:10px;overflow:hidden;background:#DCE8F0;isolation:isolate}
+#race-svg{display:block;width:100%;height:440px}
+.race-tooltip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;padding:8px 10px;border-radius:8px;font-size:11px;line-height:1.55;box-shadow:0 6px 20px rgba(0,0,0,.2);opacity:0;transition:opacity .15s;z-index:3;white-space:nowrap}
+.race-board{height:440px;overflow:hidden;background:#fff;border:1px solid var(--card-line);border-radius:10px;padding:12px}
+.race-board h3{font-size:13px;margin:0 0 8px;color:var(--navy);font-weight:800}
+.race-row{height:59px;display:grid;grid-template-columns:24px minmax(0,1fr) 60px;gap:6px;align-items:center;padding:7px 0;border-bottom:1px solid #EEF1F4;font-size:12px}
+.race-row[data-rank="1"]{margin-top:18px}
+.race-row:last-child{border-bottom:0}
+.race-rank{position:relative;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:11px;border:1.5px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);flex:none}
+.race-row[data-rank="1"] .race-rank::before{content:"👑";position:absolute;top:-24px;left:50%;transform:translateX(-50%) rotate(-7deg);font-size:22px;line-height:1}
+.race-name{min-width:0;overflow:hidden;text-overflow:ellipsis;font-weight:700;white-space:nowrap;color:var(--ink)}
+.race-val{width:60px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:800;color:var(--navy)}
+.race-gap{grid-column:2/4;height:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--sub);font-size:10px;line-height:15px;margin-top:-4px;font-variant-numeric:tabular-nums}
+@media (max-width:767px){
+  #sales-race{padding:10px 12px}
+  .race-layout{grid-template-columns:1fr}
+  .race-chart,#race-svg{height:360px}
+  .race-board{height:auto;display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+  .race-board h3{grid-column:1/-1}
+}
+@media (max-width:440px){ .race-board{grid-template-columns:1fr} .race-row{font-size:11px} }
+@media (prefers-reduced-motion: reduce){ .race-tooltip{transition:none} }
 header#bar{background:var(--navy);color:#fff;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .logo-chip{flex:none;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:9px;padding:4px 8px;height:36px;box-shadow:0 1px 4px rgba(0,0,0,.2)}
 .logo-chip img{height:28px;width:auto;display:block}
@@ -93,6 +122,12 @@ main{padding:16px;width:100%;max-width:1560px;margin:0 auto}
 .seat{font-size:11.5px;border-radius:999px;padding:1px 8px;border:1px dashed #C6CDD4;color:var(--mut);display:inline-flex;align-items:center;gap:4px;min-height:23px}
 .seat.filled{border:1px solid var(--lb);background:#EDF3F9;color:var(--navy);font-weight:700}
 .seat.filled i{font-style:normal;width:15px;height:15px;border-radius:50%;background:var(--navy);color:#fff;font-size:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:800}
+button.seat{font:inherit;cursor:pointer}
+button.seat.filled:hover{background:#E2EBF5}
+.seat.filled.paid{background:#FEE2E2;border-color:#DC2626;color:#7F1D1D}
+.seat.filled.paid i{background:#DC2626}
+.seat.filled.paid b{font-size:10.5px;font-weight:800}
+.tag.paid{background:#FEE2E2;border-color:#DC2626;color:#7F1D1D}
 .tier-teams{display:grid;grid-template-columns:1fr;gap:4px;margin-top:5px}
 .tier-teams.dense{grid-template-columns:repeat(auto-fill,minmax(272px,1fr))}
 .none{margin-top:4px;font-size:12.5px;color:var(--mut)}
@@ -124,6 +159,8 @@ main{padding:16px;width:100%;max-width:1560px;margin:0 auto}
 .lvl.on{border-color:var(--lb);color:var(--navy);background:#EDF3F9}
 .u-gap{font-size:12px;color:var(--sub);margin-top:2px}
 .u-err{font-size:12.5px;color:var(--red);margin-top:3px;font-weight:700}
+.u-preview{font-size:12px;color:var(--blue);margin-top:2px;font-weight:700;min-height:15px}
+#update-mode-toggle{font-size:12px;color:var(--blue);text-decoration:underline;background:none;border:none;cursor:pointer;padding:0;margin-left:2px;font-weight:700}
 .u-act{display:flex;gap:8px;align-items:center}
 .sale-in{width:142px;height:44px;border:1px solid var(--line);border-radius:9px;padding:0 10px;font-size:16px;text-align:right;background:#fff}
 .sale-in:focus{border-color:var(--blue)}
@@ -305,6 +342,20 @@ legend{font-size:13px;font-weight:800;color:var(--navy);padding:0 6px}
 <main>
   <section id="board" aria-label="競賽看板">
     <div class="card">
+      <div id="sales-race" aria-label="業績進度曲線圖">
+        <div class="race-head">
+          <div><h2>業績進度</h2><div class="race-sub">22 週戰況・單位：萬元</div></div>
+          <div class="race-week" id="race-week" aria-live="polite">第 1 週</div>
+        </div>
+        <div class="race-controls"><button type="button" class="btn ghost" id="race-play" data-fkey="race-play">↺ 重播戰況</button></div>
+        <div class="race-layout">
+          <div class="race-chart" id="race-chart">
+            <svg id="race-svg" role="img" aria-label="六組累計業績競賽曲線圖"></svg>
+            <div class="race-tooltip" id="race-tip" role="tooltip"></div>
+          </div>
+          <aside class="race-board" id="race-board"><h3>本週排行榜</h3></aside>
+        </div>
+      </div>
       <div id="wheelcard">
         <div class="wc-head">
           <div class="wc-title"><span class="dot-r"></span><span class="dot-w"></span>紅白配對輪盤</div>
@@ -324,9 +375,9 @@ legend{font-size:13px;font-weight:800;color:var(--navy);padding:0 6px}
   </section>
 
   <div id="panel">
-    <section class="card" aria-label="業績更新">
+    <section class="card" id="panel-update" aria-label="業績更新">
       <h2>業績更新</h2>
-      <div class="h-note">每次只更新一組，系統依送出順序記錄達標先後。輸入僅接受 0 以上整數。</div>
+      <div class="h-note" id="update-note"></div>
       <div id="update-list"></div>
     </section>
 
@@ -340,7 +391,7 @@ legend{font-size:13px;font-weight:800;color:var(--navy);padding:0 6px}
         <li class="big"><i>5</i><span><b>競賽期間季分紅加碼：結算期間延長兩個月</b>，%數比照季度分紅——60 萬 2%、120 萬 4%、180 萬 5%（取最高一級、整筆計算）。</span></li>
       </ol>
       <div class="pool-line">
-        <div class="pool-box"><div class="pl">已發放／已鎖定獎金</div><div class="pv num"><span id="pool-used">0</span> 元</div></div>
+        <div class="pool-box"><div class="pl">已鎖定獎金</div><div class="pv num"><span id="pool-used">0</span> 元</div><div class="pl num" id="pool-paid"></div></div>
         <div class="pool-box"><div class="pl">剩餘獎金池</div><div class="pv num"><span id="pool-left">15,000</span> 元</div></div>
       </div>
       <div id="seatleft" aria-label="各階剩餘席次"></div>
@@ -454,7 +505,7 @@ function defaultState(){
   return{
     config:{title:'2026 出國登峰競賽',startDate:'',endDate:''},
     teams:CN.slice(0,ROSTER_RED.length).map((c,i)=>({id:'team-'+(i+1),name:'第'+c+'組'})),
-    sales:{},updatedAt:{},records:[],seq:0,bonus:{},
+    sales:{},updatedAt:{},records:[],seq:0,bonus:{},salesHistory:[],
     wheel:{rosterRed:[...ROSTER_RED],rosterWhite:[...ROSTER_WHITE],red:[...ROSTER_RED],white:[...ROSTER_WHITE],drawn:[],pending:null,open:null}
   };
 }
@@ -465,6 +516,7 @@ function load(){
       if(!s.wheel)s.wheel={rosterRed:[],rosterWhite:[],red:[],white:[],drawn:[],open:null};
       if(s.wheel.pending===undefined)s.wheel.pending=null;
       if(!s.bonus||typeof s.bonus!=='object')s.bonus={};
+      if(!Array.isArray(s.salesHistory))s.salesHistory=[];
       // 佔位名單一次性遷移成 2026-07-30 正式名冊（名冊被手動改過就不動）
       const OLD_R=['周小白','傅韋霖','蔡佳紋','張維剛','王鐿靜','洪秀如','王淑君','董信宏'];
       const OLD_W=['鄭宏祥','朱寶章','黃冠維','周粲森','王晨睿','鄧宥均','楊浚禾','林敬能'];
@@ -528,6 +580,7 @@ function fromCloud(s){
   if(s.wheel.pending===undefined)s.wheel.pending=null;
   if(!s.sales)s.sales={};if(!s.updatedAt)s.updatedAt={};if(typeof s.seq!=='number')s.seq=0;
   if(!s.bonus||typeof s.bonus!=='object')s.bonus={};
+  if(!Array.isArray(s.salesHistory))s.salesHistory=[];
   return s;
 }
 /* 有沒有「實質內容」＝抽過組／有業績／有達標紀錄／組名改過。空白範本不算，才不會用空的蓋掉真資料 */
@@ -552,6 +605,7 @@ function renderSync(msg,warn){
 }
 function syncText(){
   if(CLOUD.mode==='local')renderSync('單機模式・未登入看不到店長的戰況',true);
+  else if(CLOUD.mode==='needline')renderSync('共用密碼登入看不到雲端戰況——請改用 LINE 登入',true);
   else if(CLOUD.mode==='error')renderSync('雲端連不上・顯示這台電腦的資料',true);
   else if(!CLOUD.at)renderSync(CLOUD.admin?'雲端已連線・這台尚未上傳':'等待店長上傳戰況',true);
   else renderSync((CLOUD.admin?'雲端同步':'唯讀')+'・<b>'+hhmm(CLOUD.at)+'</b> 由 '+esc(CLOUD.by||'店長')+' 更新');
@@ -565,7 +619,7 @@ function renderBanner(){
     kind='warn';
     msg=(loginMsg?'<b>'+loginMsg+'</b><br>':'')
       +'你還沒登入（或登入已逾時），這頁只會顯示<b>這台電腦上的資料</b>，看不到最新戰況。點右邊用 LINE 登入，登入完會自動回到這一頁。'
-      +'<br><span style="font-weight:600">在 LINE 裡打不開登入畫面的話，改到 <a href="https://tools.benebuyhouse.com/" style="color:inherit">工具站</a> 用共用密碼登入，再從側欄「出國競賽」點進來。</span>';
+      +'<br><span style="font-weight:600">在 LINE 裡打不開登入畫面的話，用手機瀏覽器（Safari／Chrome）開這一頁再登入。<b>共用密碼登入看不到雲端戰況</b>——戰況含全隊業績數字，只開放 LINE 登入。</span>';
     btn='<button type="button" class="cba" data-cb="login">用 LINE 登入</button>';
   }else if(CLOUD.mode==='error'){
     kind='warn';msg='雲端連不上，畫面顯示的是這台電腦的資料，可能不是最新的。';
@@ -592,6 +646,10 @@ function renderCloudFs(){
 }
 async function cloudGet(){
   const r=await fetch('/api/contest',{headers:{'X-Session':sessToken()},cache:'no-store'});
+  // 🔴 403＝身分不夠（共用密碼 session 自 0829 起不算員工身分，因為 /api/contest 回的是全隊業績數字，
+  //    而共用密碼的 hash 是公開明碼、任何人都拿得到）。要跟「網路連不上」分開報，
+  //    否則業務看到「雲端連不上」會一直重試，永遠不知道要改用 LINE 登入。
+  if(r.status===403){ const e=new Error('needline'); e.needLine=true; throw e; }
   if(!r.ok)throw new Error('HTTP '+r.status);
   return r.json();
 }
@@ -641,7 +699,7 @@ async function cloudBoot(){
     if(cs&&hasWork(cs))adopt(cs);                 // 雲端有實質戰況＝共享真相
     else if(CLOUD.admin&&hasWork(state))await cloudPushNow();   // 雲端還沒資料 → 把這台已抽好的看板上傳
     else if(cs)adopt(cs);
-  }catch(e){CLOUD.mode='error';}
+  }catch(e){CLOUD.mode=e&&e.needLine?'needline':'error';}
   if(!CLOUD.admin){
     renderBonus();                                // 唯讀屬性要在 data-ro 設好之後才長得出來
     setInterval(cloudRefresh,45000);
@@ -677,6 +735,9 @@ function contestStatus(){
 function commitUpdate(id,n){
   const now=isoLocal();
   state.sales[id]=n;state.updatedAt[id]=now;
+  if(!Array.isArray(state.salesHistory))state.salesHistory=[];
+  const hseq=state.salesHistory.length+1;
+  state.salesHistory.push({id:'h'+hseq,teamId:id,value:n,recordedAt:now,seq:hseq});
   const gained=[],reachedOnly=[];
   for(const t of TIERS){
     if(n>=t.threshold&&!active().some(r=>r.teamId===id&&r.tierId===t.id)){
@@ -694,7 +755,7 @@ function teamCard(team,tier){
   const v=sal(team.id);
   const rec=active().find(r=>r.teamId===team.id&&r.tierId===tier.id);
   const revokedRec=!rec&&state.records.some(r=>r.teamId===team.id&&r.tierId===tier.id&&r.revoked);
-  const stTag=rec&&rec.rewardClaimed?`<span class="tag ok">${CHECK}已獲獎 ${fmt(tier.reward)} 元</span>`
+  const stTag=rec&&rec.rewardClaimed?(rec.paidAt?`<span class="tag paid">${CHECK}已領 ${fmt(tier.reward)} 元</span>`:`<span class="tag ok">${CHECK}已獲獎 ${fmt(tier.reward)} 元</span>`)
     :revokedRec?'<span class="tag rv">獎金資格已撤銷</span>'
     :'<span class="tag na">達標未獲獎</span>';
   const bn=bonusOf(team.id);
@@ -867,7 +928,12 @@ function renderBoard(){
     const here=teams.filter(x=>{const tt=tierOf(sal(x.id));return tt&&tt.id===t.id;});
     const claims=tierClaims(t.id);
     let seats='';
-    claims.forEach((r,k)=>{seats+=`<span class="seat filled"><i>${k+1}</i>${esc(teamById(r.teamId).name)}</span>`;});
+    const ro=document.body.dataset.ro==='1';
+    claims.forEach((r,k)=>{
+      const paid=!!r.paidAt,inner=`<i>${k+1}</i>${esc(teamById(r.teamId).name)}${paid?'<b>已領</b>':''}`;
+      seats+=ro?`<span class="seat filled${paid?' paid':''}">${inner}</span>`
+        :`<button type="button" class="seat filled${paid?' paid':''}" data-pay="${r.id}" data-fkey="pay-${r.id}" aria-pressed="${paid}" title="${paid?'已領獎金，點一下改回未領':'點一下標記已領獎金'}">${inner}</button>`;
+    });
     for(let k=claims.length;k<t.capacity;k++)seats+='<span class="seat">虛位</span>';
     h+=`<section class="tier tier-${t.id}" aria-label="第 ${t.id} 階">
       <div class="tier-head"><span class="tier-badge">第 ${t.id} 階</span>
@@ -883,29 +949,61 @@ function renderBoard(){
       :(teams.length?'<div class="none">所有組別皆已進入階梯</div>'
         :'<div class="none">尚未成組——用上方輪盤配對完，按「確定成組」就會出現在這裡</div>'));
 }
+let updateMode='delta';   // 'delta'＝輸入本週新增業績（自動加總）；'total'＝直接輸入累積總額
+function updateModeNote(){
+  return updateMode==='delta'
+    ?'輸入「本週新增業績」，系統會自動加到目前累積總額；要修正可輸入負數（例如 -20000）。'
+    :'直接輸入「累積到目前為止的總業績」，不是本週新增；適合第一次建檔或大幅修正。';
+}
+function renderUpdateHead(){
+  const note=$('#update-note');if(!note)return;
+  const btnText=updateMode==='delta'?'切換成直接輸入累積總額':'切換成輸入本週新增業績';
+  note.innerHTML=updateModeNote()+' <button type="button" id="update-mode-toggle" data-fkey="update-mode-toggle">'+btnText+'</button>';
+}
+function draftDeltaFor(id){
+  if(drafts.has(id))return drafts.get(id);
+  const ms=memberSum(id);
+  if(ms!==null){const d=ms-sal(id);return d===0?'':String(d);}
+  return '';
+}
 function renderUpdate(){
+  renderUpdateHead();
   $('#update-list').innerHTML=sortedTeams().map((t,i)=>{
     const v=sal(t.id),lt=tierOf(v);
     const ms=memberSum(t.id);
-    const draft=drafts.has(t.id)?drafts.get(t.id):String(ms===null?v:ms);
-    const shown=draft===''?'':fmt(parseInt(draft,10));
     const mem=teamMembers(t.id);
+    let shown,previewText='';
+    if(updateMode==='delta'){
+      const draft=draftDeltaFor(t.id);
+      const neg=draft.startsWith('-'),digits=draft.replace('-','');
+      shown=digits===''?(neg?'-':''):(neg?'-':'')+fmt(parseInt(digits,10));
+      if(digits!==''){
+        const nt=v+parseInt(draft,10);
+        previewText='＝ 更新後累積 '+fmt(Math.max(0,nt))+' 元'+(nt<0?'（超過扣減上限）':'');
+      }
+    }else{
+      const draft=drafts.has(t.id)?drafts.get(t.id):String(ms===null?v:ms);
+      shown=draft===''?'':fmt(parseInt(draft,10));
+    }
     const sumNote=ms!==null&&ms!==v
-      ?`<div class="u-sum num">個人加總 ${fmt(ms)} 元（${mem.map(n=>esc(n)+' '+fmt(Number(state.bonus[n]||0))).join(' ＋ ')}）待送出</div>`:'';
+      ?`<div class="u-sum num">個人加總 ${fmt(ms)} 元（${mem.map(n=>esc(n)+' '+fmt(Number(state.bonus[n]||0))).join(' ＋ ')}）${updateMode==='delta'?'－目前累積 '+fmt(v)+' 元 ＝建議新增 '+fmt(ms-v)+' 元':'待送出'}</div>`:'';
     return `<div class="urow" data-flip="r-${t.id}">
       <span class="rank num">${i+1}</span>
       <div class="u-main"><div><span class="u-team">${esc(t.name)}</span><span class="lvl ${lt?'on':''}">${lvlText(v)}</span></div>
         <div class="u-gap num">目前 ${fmt(v)} 元・${gapText(v)}</div>
         ${sumNote}
+        ${updateMode==='delta'?`<div class="u-preview num" id="preview-${t.id}">${previewText}</div>`:''}
         <div class="u-err num" id="err-${t.id}" hidden></div></div>
-      <div class="u-act"><input class="sale-in num" data-team="${t.id}" data-fkey="in-${t.id}" inputmode="numeric" autocomplete="off" value="${shown}" aria-label="${esc(t.name)}目前累積業績（元）">
+      <div class="u-act"><input class="sale-in num" data-team="${t.id}" data-fkey="in-${t.id}" inputmode="numeric" autocomplete="off" value="${shown}" placeholder="${updateMode==='delta'?'本週新增':''}" aria-label="${esc(t.name)}${updateMode==='delta'?'本週新增業績（元）':'目前累積業績（元）'}">
       <button type="button" class="btn primary upd" data-team="${t.id}" data-fkey="u-${t.id}">更新</button></div></div>`;
   }).join('');
 }
 function renderRules(){
   const used=active().filter(r=>r.rewardClaimed).reduce((s,r)=>s+TIERS[r.tierId-1].reward,0);
+  const paid=active().filter(r=>r.rewardClaimed&&r.paidAt).reduce((s,r)=>s+TIERS[r.tierId-1].reward,0);
   $('#pool-used').textContent=fmt(used);
   $('#pool-left').textContent=fmt(POOL-used);
+  $('#pool-paid').textContent=used?`已領 ${fmt(paid)} 元・待發 ${fmt(used-paid)} 元`:'';
   $('#seatleft').innerHTML=TIERS.map(t=>{
     const left=t.capacity-tierClaims(t.id).length;
     return `<span class="sl ${left===0?'full':''}">第 ${t.id} 階 ${left===0?'已額滿':'剩 '+left+' 席'}</span>`;
@@ -947,7 +1045,7 @@ function teamOfMember(name){
 function syncTeamDraft(name){
   const id=teamOfMember(name);if(!id)return;
   const s=memberSum(id);if(s===null)return;
-  drafts.set(id,String(s));
+  drafts.set(id,updateMode==='delta'?String(s-sal(id)):String(s));
   renderUpdate();
 }
 function bonusTotals(){
@@ -974,7 +1072,213 @@ function renderBonus(){
   if(tot)tot.hidden=false;
   bonusTotals();
 }
-function renderAll(){renderHeader();renderWheel();renderBoard();renderUpdate();renderBonus();renderRules();}
+/* ── 業績進度曲線圖（22 週）── */
+const RACE_WEEKS=22;
+const RACE_COLORS=['#007f8b','#3d6db5','#9a5bb5','#df5168','#e58a16','#3c9a5f'];
+/* 山景背景跟業績量連動：業績量越低鏡頭越貼近山腳，直到接近 250 萬門檻才會露出山頂 */
+const MTN_SRC='assets/bg-r7k2m9x4qd.jpg';   /* 內部限定素材：不可用於官網/報告/對客戶頁面，檔名刻意不可猜＋robots 全站封鎖 */
+const MTN_W=1400,MTN_H=903,MTN_PEAK_ROW=90,MTN_BASE_ROW=888;
+const MTN_PX_PER_WAN=(MTN_BASE_ROW-MTN_PEAK_ROW)/250;
+const MTN_MIN_SCALE=0.4;
+function weekAnchor(){
+  if(state.config.startDate)return new Date(state.config.startDate+'T00:00:00');
+  const hist=state.salesHistory||[];
+  let min=Infinity;
+  hist.forEach(h=>{const t=new Date(h.recordedAt).getTime();if(!isNaN(t)&&t<min)min=t;});
+  return isFinite(min)?new Date(min):new Date();
+}
+function weekIndexOf(ts,anchor){
+  const d=Math.floor((new Date(ts).getTime()-anchor.getTime())/(7*86400000))+1;
+  return Math.max(1,Math.min(RACE_WEEKS,d));
+}
+function median(arr){
+  const s=[...arr].sort((a,b)=>a-b),n=s.length;
+  if(!n)return 0;
+  const m=Math.floor(n/2);
+  return n%2?s[m]:(s[m-1]+s[m])/2;
+}
+function computeYMaxWan(latestValuesWan){
+  const currentMedian=median(latestValuesWan);
+  const currentHighest=Math.max(0,...latestValuesWan);
+  const flexibleCeiling=Math.max(100,currentMedian*1.8,currentHighest*1.12);
+  return Math.min(999,Math.ceil(flexibleCeiling/50)*50);
+}
+/* Fritsch–Carlson 單調三次曲線（等同 d3.curveMonotoneX），避免累積值視覺上倒退 */
+function monotonePath(pts){
+  const n=pts.length;
+  if(!n)return '';
+  if(n===1)return `M${pts[0].x},${pts[0].y}`;
+  const xs=pts.map(p=>p.x),ys=pts.map(p=>p.y),dxs=[],ms=[];
+  for(let i=0;i<n-1;i++){dxs[i]=xs[i+1]-xs[i];ms[i]=dxs[i]?(ys[i+1]-ys[i])/dxs[i]:0;}
+  const t=new Array(n);
+  t[0]=ms[0];t[n-1]=ms[n-2];
+  for(let i=1;i<n-1;i++){
+    if(ms[i-1]*ms[i]<=0)t[i]=0;
+    else{const c=dxs[i-1]+dxs[i];t[i]=3*c/((c+dxs[i])/ms[i-1]+(c+dxs[i-1])/ms[i]);}
+  }
+  let d=`M${xs[0]},${ys[0]}`;
+  for(let i=0;i<n-1;i++){
+    const dx=dxs[i];
+    const c1x=xs[i]+dx/3,c1y=ys[i]+t[i]*dx/3;
+    const c2x=xs[i+1]-dx/3,c2y=ys[i+1]-t[i+1]*dx/3;
+    d+=`C${c1x.toFixed(2)},${c1y.toFixed(2)} ${c2x.toFixed(2)},${c2y.toFixed(2)} ${xs[i+1].toFixed(2)},${ys[i+1].toFixed(2)}`;
+  }
+  return d;
+}
+const RACE={week:1,curWeek:1,yMax:100,series:[],timer:null,wired:false};
+function raceBuildSeries(){
+  const anchor=weekAnchor();
+  const curWeek=weekIndexOf(new Date(),anchor);
+  const hist=state.salesHistory||[];
+  const series=state.teams.map((team,i)=>{
+    const byWeek={};
+    hist.filter(h=>h.teamId===team.id).forEach(h=>{
+      const w=weekIndexOf(h.recordedAt,anchor);
+      if(!byWeek[w]||h.seq>byWeek[w].seq)byWeek[w]=h;
+    });
+    let last=0;const values=[];
+    for(let w=1;w<=RACE_WEEKS;w++){
+      if(byWeek[w])last=byWeek[w].value;
+      values.push(last/10000);
+    }
+    return{teamId:team.id,name:team.name,color:RACE_COLORS[i%RACE_COLORS.length],values};
+  });
+  return{series,curWeek};
+}
+function raceGapText(v){
+  const nt=TIERS.find(t=>v<t.threshold/10000);
+  return nt?`距 ${fmt(nt.threshold/10000)} 萬門檻差 ${fmt(Math.round((nt.threshold/10000-v)*10)/10)} 萬・獎金 ${fmt(nt.reward)} 元`:'已登頂 250 萬';
+}
+function drawRaceBoard(){
+  const board=$('#race-board');if(!board)return;
+  const week=RACE.week;
+  const ranked=RACE.series.map(t=>({t,v:t.values[week-1]})).sort((a,b)=>b.v-a.v);
+  board.querySelectorAll('.race-row').forEach(n=>n.remove());
+  ranked.forEach((r,i)=>{
+    const row=document.createElement('div');
+    row.className='race-row';row.dataset.rank=String(i+1);
+    row.innerHTML=`<span class="race-rank" style="background:${r.t.color}">${i+1}</span><span class="race-name">${esc(r.t.name)}</span><span class="race-val num">${fmt(r.v)}萬</span><span class="race-gap num">${raceGapText(r.v)}</span>`;
+    board.appendChild(row);
+  });
+}
+function drawRaceChart(){
+  const wrap=$('#race-chart'),svg=$('#race-svg');
+  if(!wrap||!svg)return;
+  const width=Math.max(280,wrap.clientWidth),height=440;
+  const margin={top:24,right:64,bottom:44,left:44};
+  const week=RACE.week,yMax=RACE.yMax||100,series=RACE.series;
+  const xAt=w=>margin.left+(width-margin.left-margin.right)*(w-1)/(RACE_WEEKS-1);
+  const yAt=v=>height-margin.bottom-(height-margin.top-margin.bottom)*(Math.min(v,yMax)/yMax);
+  const anchor=weekAnchor();
+  const monthOf=w=>new Date(anchor.getTime()+(w-1)*7*86400000).getMonth()+1;
+  const bands=[];let curM=monthOf(1),start=1;
+  for(let w=2;w<=RACE_WEEKS;w++){const m=monthOf(w);if(m!==curM){bands.push({a:start,b:w-1});start=w;curM=m;}}
+  bands.push({a:start,b:RACE_WEEKS});
+  const step=xAt(2)-xAt(1);
+  let s='';
+  // 山景：value=0 對齊圖底、value=250(萬) 對齊山頂，隨 yMax 動態縮放（yMax 越小＝鏡頭貼越近山腳）
+  const plotH=height-margin.top-margin.bottom;
+  const mScale=Math.max(plotH/(MTN_PX_PER_WAN*yMax),MTN_MIN_SCALE);
+  const mW=MTN_W*mScale,mH=MTN_H*mScale;
+  const mX=(width-mW)/2;
+  const mY=(height-margin.bottom)-MTN_BASE_ROW*mScale;
+  s+=`<image href="${MTN_SRC}" x="${mX.toFixed(1)}" y="${mY.toFixed(1)}" width="${mW.toFixed(1)}" height="${mH.toFixed(1)}" preserveAspectRatio="none" style="filter:saturate(.38) contrast(.92) brightness(1.03)"/>`;
+  s+=`<rect x="0" y="0" width="${width}" height="${height}" fill="rgba(255,255,255,.32)"/>`;
+  bands.forEach((b,i)=>{
+    if(i%2!==1)return;
+    const x0=xAt(b.a)-step/2,x1=xAt(b.b)+step/2;
+    s+=`<rect x="${x0.toFixed(1)}" y="${margin.top}" width="${(x1-x0).toFixed(1)}" height="${height-margin.top-margin.bottom}" fill="#1C3D6509"/>`;
+  });
+  for(let i=0;i<=5;i++){
+    const v=yMax*i/5,y=yAt(v);
+    s+=`<line x1="${margin.left}" x2="${width-margin.right}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#DCDDDD" opacity=".6"/>`;
+    s+=`<text x="${margin.left-8}" y="${(y+4).toFixed(1)}" text-anchor="end" font-size="11" fill="#5C6B7A">${fmt(Math.round(v))}</text>`;
+  }
+  (width<520?[1,6,11,16,22]:[1,4,8,12,16,20,22]).forEach(w=>{
+    s+=`<text x="${xAt(w).toFixed(1)}" y="${height-margin.bottom+18}" text-anchor="middle" font-size="11" fill="#5C6B7A">W${w}</text>`;
+  });
+  s+=`<line x1="${margin.left}" x2="${width-margin.right}" y1="${height-margin.bottom}" y2="${height-margin.bottom}" stroke="#5C6B7A" opacity=".4"/>`;
+  s+=`<text x="${((margin.left+width-margin.right)/2).toFixed(1)}" y="${height-8}" text-anchor="middle" font-size="12" font-weight="700" fill="#1C3D65">競賽週次</text>`;
+  s+=`<text x="${(-(margin.top+height-margin.bottom)/2).toFixed(1)}" y="15" transform="rotate(-90)" text-anchor="middle" font-size="12" font-weight="700" fill="#1C3D65">累計業績（萬元）</text>`;
+  TIERS.forEach((t,i)=>{
+    const v=t.threshold/10000;if(v>yMax)return;
+    const y=yAt(v);
+    s+=`<line x1="${margin.left}" x2="${width-margin.right}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#C88B20" stroke-dasharray="5 5" opacity=".45"/>`;
+    s+=`<text x="${width-margin.right+5}" y="${(y+4).toFixed(1)}" font-size="10" fill="#5C6B7A">${i+1}階 ${fmt(v)}萬</text>`;
+  });
+  series.forEach(t=>{
+    const pts=t.values.slice(0,week).map((v,idx)=>({x:xAt(idx+1),y:yAt(v)}));
+    if(!pts.length)return;
+    s+=`<path d="${monotonePath(pts)}" fill="none" stroke="${t.color}" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 3px rgba(255,255,255,.9))"/>`;
+    pts.forEach(p=>{s+=`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4" fill="${t.color}" stroke="#fff" stroke-width="1.5"/>`;});
+  });
+  s+=`<rect id="race-hit" x="${margin.left}" y="${margin.top}" width="${Math.max(0,width-margin.left-margin.right)}" height="${height-margin.top-margin.bottom}" fill="transparent" style="cursor:crosshair"/>`;
+  s+=`<line id="race-guide" y1="${margin.top}" y2="${height-margin.bottom}" stroke="#5C6B7A" opacity="0" stroke-dasharray="3 3"/>`;
+  s+=`<g id="race-markers"></g>`;
+  svg.setAttribute('viewBox',`0 0 ${width} ${height}`);
+  svg.innerHTML=s;
+  RACE.scale={xAt,yAt,margin,width,height};
+  if(!wrap.dataset.wired){
+    wrap.dataset.wired='1';
+    wrap.addEventListener('mousemove',e=>{
+      const sc=RACE.scale;if(!sc)return;
+      const rect=svg.getBoundingClientRect();
+      const mx=(e.clientX-rect.left)*(sc.width/rect.width);
+      const span=(RACE_WEEKS-1)||1;
+      const rawW=1+(mx-sc.margin.left)/(sc.width-sc.margin.left-sc.margin.right)*span;
+      const w=Math.max(1,Math.min(RACE.week,Math.round(rawW)));
+      const guide=$('#race-guide');if(guide){guide.setAttribute('x1',sc.xAt(w));guide.setAttribute('x2',sc.xAt(w));guide.setAttribute('opacity','.35');}
+      const markers=$('#race-markers');
+      if(markers){
+        markers.innerHTML=RACE.series.map(t=>`<circle cx="${sc.xAt(w).toFixed(1)}" cy="${sc.yAt(t.values[w-1]).toFixed(1)}" r="5" fill="${t.color}" stroke="#fff" stroke-width="2"/>`).join('');
+      }
+      const tip=$('#race-tip');
+      if(tip){
+        tip.innerHTML=`<strong>第 ${w} 週</strong><br>`+RACE.series.map(t=>`<span style="color:${t.color}">●</span> ${esc(t.name)}　${fmt(t.values[w-1])} 萬`).join('<br>');
+        tip.style.opacity='1';
+        tip.style.left=Math.min(sc.width-210,sc.xAt(w)+12)+'px';
+        tip.style.top='42px';
+      }
+    });
+    wrap.addEventListener('mouseleave',()=>{
+      const guide=$('#race-guide');if(guide)guide.setAttribute('opacity','0');
+      const markers=$('#race-markers');if(markers)markers.innerHTML='';
+      const tip=$('#race-tip');if(tip)tip.style.opacity='0';
+    });
+  }
+}
+function renderRace(){
+  const box=$('#sales-race');if(!box)return;
+  const{series,curWeek}=raceBuildSeries();
+  RACE.series=series;RACE.curWeek=curWeek;
+  if(!RACE.timer){
+    RACE.week=curWeek;
+    RACE.yMax=computeYMaxWan(series.map(t=>t.values[curWeek-1]));
+  }
+  drawRaceChart();drawRaceBoard();
+  const wl=$('#race-week');if(wl)wl.textContent='第 '+RACE.week+' 週';
+  const pb=$('#race-play');if(pb)pb.textContent=RACE.timer?'❚❚ 暫停':'↺ 重播戰況';
+}
+function raceToggle(){
+  if(RACE.timer){clearInterval(RACE.timer);RACE.timer=null;renderRace();return;}
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){RACE.week=RACE.curWeek;drawRaceChart();drawRaceBoard();return;}
+  RACE.week=1;
+  drawRaceChart();drawRaceBoard();
+  const wl=$('#race-week');if(wl)wl.textContent='第 1 週';
+  const pb=$('#race-play');if(pb)pb.textContent='❚❚ 暫停';
+  RACE.timer=setInterval(()=>{
+    RACE.week++;
+    if(RACE.week>=RACE.curWeek){RACE.week=RACE.curWeek;clearInterval(RACE.timer);RACE.timer=null;}
+    drawRaceChart();drawRaceBoard();
+    const wl2=$('#race-week');if(wl2)wl2.textContent='第 '+RACE.week+' 週';
+    const pb2=$('#race-play');if(pb2)pb2.textContent=RACE.timer?'❚❚ 暫停':'↺ 重播戰況';
+  },360);
+}
+$('#sales-race').addEventListener('click',e=>{
+  if(e.target.closest('#race-play'))raceToggle();
+});
+new ResizeObserver(()=>{if($('#race-chart'))drawRaceChart();}).observe($('#race-chart'));
+function renderAll(){renderHeader();renderWheel();renderBoard();renderUpdate();renderBonus();renderRules();renderRace();}
 
 function flipRender(){
   const ae=document.activeElement;
@@ -1003,18 +1307,32 @@ function toast(msg){
 
 function onUpdateClick(id){
   const team=teamById(id);
-  const raw=drafts.has(id)?drafts.get(id):String(sal(id));
+  const raw=drafts.has(id)?drafts.get(id):(updateMode==='delta'?'':String(sal(id)));
   const err=$('#err-'+id);
-  if(!/^\d+$/.test(raw)){
-    if(err){err.textContent='請輸入 0 以上的整數金額';err.hidden=false;}
-    toast(team.name+'：輸入無效，請輸入 0 以上的整數金額');
+  const pattern=updateMode==='delta'?/^-?\d+$/:/^\d+$/;
+  if(raw===''||!pattern.test(raw)){
+    if(err){err.textContent=updateMode==='delta'?'請輸入本週新增業績金額（可輸入負數修正，例如 -20000）':'請輸入 0 以上的整數金額';err.hidden=false;}
+    toast(team.name+'：輸入無效');
     return;
   }
-  const n=parseInt(raw,10);
+  let n;
+  if(updateMode==='delta'){
+    const delta=parseInt(raw,10);
+    n=sal(id)+delta;
+    if(n<0){
+      if(err){err.textContent=`扣減後不能小於 0（目前累積 ${fmt(sal(id))} 元，最多扣 ${fmt(sal(id))} 元）`;err.hidden=false;}
+      toast(team.name+'：扣減金額超過目前累積');
+      return;
+    }
+  }else{
+    n=parseInt(raw,10);
+  }
   const res=commitUpdate(id,n);
   drafts.delete(id);
   flipRender();
-  let msg=`已更新：${team.name} ${fmt(n)} 元，目前位置 ${lvlText(n)}`;
+  let msg=updateMode==='delta'
+    ?`已更新：${team.name} 新增 ${fmt(parseInt(raw,10))} 元 → 累積 ${fmt(n)} 元，目前位置 ${lvlText(n)}`
+    :`已更新：${team.name} ${fmt(n)} 元，目前位置 ${lvlText(n)}`;
   if(res.gained.length){
     const sum=res.gained.reduce((s,t)=>s+t.reward,0);
     msg+=`；取得 ${res.gained.map(t=>'第 '+t.id+' 階').join('、')} 獎金，合計 ${fmt(sum)} 元`;
@@ -1041,7 +1359,7 @@ function renderRecords(){
     const t=TIERS[r.tierId-1],nm=esc(teamById(r.teamId).name);
     const seatIdx=tierClaims(r.tierId).findIndex(x=>x.id===r.id);
     const st=r.revoked?'<span class="tag rv">已撤銷</span>'
-      :r.rewardClaimed?`<span class="tag ok">${CHECK}獲獎第 ${seatIdx+1} 席・${fmt(t.reward)} 元</span>`
+      :r.rewardClaimed?`<span class="tag ok">${CHECK}獲獎第 ${seatIdx+1} 席・${fmt(t.reward)} 元</span>${r.paidAt?`<span class="tag paid">已領 ${r.paidAt.slice(5,10)}</span>`:''}`
       :'<span class="tag na">達標未獲獎</span>';
     const tm=r.reachedAt.slice(5,19).replace('T',' ');
     return `<div class="rrow ${r.revoked?'revoked':''}"><span class="r-seq num">#${r.seq}</span><span class="r-time num">${tm}</span><span class="r-team">${nm}</span><span class="r-tier">第 ${r.tierId} 階</span>${st}${r.revoked?'':`<span class="r-act"><button type="button" class="btn danger-ghost rv-btn" data-rid="${r.id}">撤銷</button></span>`}</div>`;
@@ -1094,7 +1412,7 @@ $('#btn-cloud-pull').addEventListener('click',async()=>{
 $('#btn-open-records').addEventListener('click',()=>{dlgSettings.close();renderRecords();dlgRecords.showModal();});
 $('#btn-reset').addEventListener('click',()=>{
   openConfirm('重設整場競賽','將清除全部 '+state.teams.length+' 組的業績、達標時間與獎金資格（競賽名稱與組名保留），此動作無法復原。確定重設？','確認重設',()=>{
-    state.sales={};state.updatedAt={};state.records=[];state.seq=0;drafts.clear();
+    state.sales={};state.updatedAt={};state.records=[];state.seq=0;state.salesHistory=[];drafts.clear();
     save();dlgSettings.close();flipRender();toast('已重設整場競賽');
   });
 });
@@ -1110,6 +1428,15 @@ $('#records-list').addEventListener('click',e=>{
     save();renderRecords();renderAll();
     toast(`已撤銷：${nm}・第 ${r.tierId} 階`);
   });
+});
+$('#tiers').addEventListener('click',e=>{
+  const b=e.target.closest('[data-pay]');if(!b||document.body.dataset.ro==='1')return;
+  const r=state.records.find(x=>x.id===b.dataset.pay);if(!r||!r.rewardClaimed||r.revoked)return;
+  r.paidAt=r.paidAt?null:isoLocal();
+  save();renderBoard();renderRules();
+  const el=document.querySelector(`[data-fkey="pay-${r.id}"]`);if(el)el.focus({preventScroll:true});
+  const nm=teamById(r.teamId).name,t=TIERS[r.tierId-1];
+  toast(r.paidAt?`已標記：${nm} 第 ${r.tierId} 階 ${fmt(t.reward)} 元已領`:`已改回未領：${nm} 第 ${r.tierId} 階`);
 });
 $('#cf-ok').addEventListener('click',()=>{dlgConfirm.close();const f=cfCb;cfCb=null;if(f)f();});
 $('#cf-cancel').addEventListener('click',()=>{dlgConfirm.close();cfCb=null;});
@@ -1158,7 +1485,7 @@ $('#wheelcard').addEventListener('click',e=>{
       '將清空目前 '+W.drawn.length+' 組配對結果，所有人回到盤面重新抽。'
       +(hadBoard?'看板上的組別與已輸入的業績也會一起清空（因為那是舊配對的成績）。':'')+'確定？','確認重抽',()=>{
       W.red=[...W.rosterRed];W.white=[...W.rosterWhite];W.drawn=[];W.pending=null;W.applied=false;
-      state.teams=[];state.sales={};state.updatedAt={};state.records=[];state.seq=0;drafts.clear();
+      state.teams=[];state.sales={};state.updatedAt={};state.records=[];state.seq=0;state.salesHistory=[];drafts.clear();
       save();flipRender();toast('已重置：盤面與看板都清空，可重新配對');
     });
   }
@@ -1166,7 +1493,7 @@ $('#wheelcard').addEventListener('click',e=>{
     const hasData=Object.values(state.sales).some(v=>v>0)||state.records.length>0;
     const doApply=()=>{
       state.teams=W.drawn.map((p,i)=>({id:'team-'+(i+1),name:p.r+'×'+p.w}));
-      state.sales={};state.updatedAt={};state.records=[];state.seq=0;drafts.clear();
+      state.sales={};state.updatedAt={};state.records=[];state.seq=0;state.salesHistory=[];drafts.clear();
       W.applied=true;
       save();flipRender();
       if(matchMedia('(max-width:767px)').matches){
@@ -1198,10 +1525,29 @@ $('#update-list').addEventListener('click',e=>{
 $('#update-list').addEventListener('input',e=>{
   const el=e.target.closest('.sale-in');if(!el)return;
   const id=el.dataset.team;
-  const raw=el.value.replace(/\D/g,'').replace(/^0+(?=\d)/,'');
+  const neg=updateMode==='delta'&&el.value.trim().startsWith('-');
+  const digits=el.value.replace(/\D/g,'').replace(/^0+(?=\d)/,'');
+  const raw=(neg?'-':'')+digits;
   drafts.set(id,raw);
-  el.value=raw===''?'':fmt(parseInt(raw,10));
+  el.value=digits===''?(neg?'-':''):(neg?'-':'')+fmt(parseInt(digits,10));
   const err=$('#err-'+id);if(err)err.hidden=true;
+  if(updateMode==='delta'){
+    const pv=$('#preview-'+id);
+    if(pv){
+      if(digits===''){pv.textContent='';}
+      else{
+        const nt=sal(id)+parseInt(raw,10);
+        pv.textContent='＝ 更新後累積 '+fmt(Math.max(0,nt))+' 元'+(nt<0?'（超過扣減上限）':'');
+      }
+    }
+  }
+});
+$('#panel-update').addEventListener('click',e=>{
+  if(!e.target.closest('#update-mode-toggle'))return;
+  updateMode=updateMode==='delta'?'total':'delta';
+  drafts.clear();
+  renderUpdate();
+  toast(updateMode==='delta'?'已切換：輸入本週新增業績（自動加總）':'已切換：直接輸入累積總額');
 });
 $('#update-list').addEventListener('keydown',e=>{
   const el=e.target.closest('.sale-in');
@@ -1231,5 +1577,6 @@ window.__contest={TIERS,get state(){return state},commitUpdate,flipRender,save,r
 renderAll();
 cloudBoot();
 </script>
+<script src="assets/watermark.js"></script>
 </body>
 </html>
